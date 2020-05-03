@@ -75,22 +75,24 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
   Nest is [MIT licensed](LICENSE).
 
 ## Instalar postgres
-- @nestjs/typeorm -> las importanciones de los paquetes
-- typorm -> gestor paquetes
-- pg -> drivers para postgres
+```bash
+# @nestjs/typeorm -> las importanciones de los paquetes
+# typorm -> gestor paquetes
+# pg -> drivers para postgres
 npm i --save @nestjs/typeorm typeorm pg
-- configuramos el debugg
+# configuramos el debugg
 creamos el archivo con la configuracion .vscode/launch.json
-- instalamos dependencia de desarrolla para:
+# instalamos dependencia de desarrolla para:
 Para variables de entorno (Uso solo en desarrollo).
 npm i -D dotenv @types/dotenv
-- modulos:
+# modulos:
 nest g module config
-- Conexion db con docker
+# Conexion db con docker
 docker run -d 5444:5432 --name my-postgres -e POSTGRES_PASSWORD postgres
 docker exec -it id bash
 psql -U postgres -d postgres -h localhost
 CREATE DATABASE nombre_db
-- instalamos ts-node
+# instalamos ts-node
 npm i -g ts-node
 
+```
