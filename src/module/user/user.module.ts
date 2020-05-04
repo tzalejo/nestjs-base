@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './user.respository';
 import { UserService } from './user.service';
-import { SharedModule } from 'src/shared/shared.module';
+import { SharedModule } from './../../shared/shared.module';
 import { UserController } from './user.controller';
 
 @Module({

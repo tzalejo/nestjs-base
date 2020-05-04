@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TypeMapper } from 'ts-mapper'; // Para convertir un objeto de un tipo a otro tipo
-import { User } from 'src/module/user/user.entity';
-import { UserDto } from 'src/module/user/dto/user.dto';
+import { User } from './../module/user/user.entity';
+import { UserDto } from './../module/user/dto/user.dto';
 
 @Injectable()
 export class MapperService extends  TypeMapper {
