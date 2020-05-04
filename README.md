@@ -94,5 +94,9 @@ psql -U postgres -d postgres -h localhost
 CREATE DATABASE nombre_db;
 # instalamos ts-node
 npm i -g ts-node
+# instalamos ts-mapper para convertir un objeto de un tipo a otro tipo
+npm i ts-mapper
+# 
+npm i class-validator
 
 ```
