@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinColumn } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { User } from "../user/user.entity";
 
 // recordar que es plural para la bd y singular para los modelos. 
@@ -16,10 +16,10 @@ export class Role extends BaseEntity {
   @Column({type: 'varchar', default: 'ACTIVE' ,length: 8})
   status: string;
   
-  @Column({type: 'timestamp', name: 'created_at'})
+  @CreateDateColumn({type: 'timestamp', name: 'created_at'})
   createdAt: Date;
 
-  @Column({type: 'timestamp', name: 'updated_at'})
+  @UpdateDateColumn({type: 'timestamp', name: 'updated_at'})
   updatedAt: Date;
 
   // relacion con usuario, muchos a muchos..
