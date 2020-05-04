@@ -1,9 +1,12 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.respository';
-import { MapperService } from 'src/shared/mapper.service';
+import { MapperService } from './../../shared/mapper.service';
 import { User } from './user.entity';
 import { UserDto } from './dto/user.dto';
+import { UserDetails } from './user.details.entity';
+import { getConnection } from 'typeorm';
+import { Role } from '../role/role.entity';
 
 @Injectable()
 export class UserService {
@@ -37,6 +40,11 @@ export class UserService {
 
 
   async create(user: User): Promise<UserDto> {
+    const details = new UserDetails();
+    user.details = details;
+    const repo = await getConnection().getRepository(Role);
+    const defaulRole = await repo.findOne({ where: {name: 'GENERAL'}});
+    user.roles =[defaulRole]; 
     const savedUser = await this._userRepository.save(user);
     return this._mapperService.map<User, UserDto>(savedUser, new UserDto());
   }
@@ -51,7 +59,7 @@ export class UserService {
     if (!userExists) {
       throw new NotFoundException('Usuario no existe');
     }
-    
+
     await this._userRepository.update(id, {status: 'INACTIVE'});
   }
 }
