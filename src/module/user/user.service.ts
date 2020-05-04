@@ -1,7 +1,6 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.respository';
-import { MapperService } from './../../shared/mapper.service';
 import { User } from './user.entity';
 import { UserDto } from './dto/user.dto';
 import { UserDetails } from './user.details.entity';
@@ -13,9 +12,8 @@ export class UserService {
   constructor(
     @InjectRepository(UserRepository)
     private readonly _userRepository: UserRepository​​,
-    private readonly _mapperService: MapperService
   ){}
-  async get(id: number): Promise<UserDto>{
+  async get(id: number): Promise<User>{
     if(!id) {
       throw new BadRequestException('Id es necesario');
     }
@@ -26,27 +24,27 @@ export class UserService {
       throw new NotFoundException('Usuario no existe');
     }
     // retorno el usuario con el formato que defino en userDto
-    return this._mapperService.map<User,UserDto>(user, new UserDto());
+    return user;
   }
 
-  async getAll(): Promise<UserDto[]>{
+  async getAll(): Promise<User[]>{
 
     const users: User[] = await this._userRepository.find( {
       where: { status: 'ACTIVE'},
     });
     // retorno los usuarios mapeado
-    return this._mapperService.mapCollection<User,UserDto>(users, new UserDto());
+    return users;
   }
 
 
-  async create(user: User): Promise<UserDto> {
+  async create(user: User): Promise<User> {
     const details = new UserDetails();
     user.details = details;
     const repo = await getConnection().getRepository(Role);
     const defaulRole = await repo.findOne({ where: {name: 'GENERAL'}});
     user.roles =[defaulRole]; 
     const savedUser = await this._userRepository.save(user);
-    return this._mapperService.map<User, UserDto>(savedUser, new UserDto());
+    return savedUser;
   }
 
   async update(id: number, user: User): Promise<void>{

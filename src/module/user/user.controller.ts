@@ -1,6 +1,5 @@
 import { Controller, Get, Param, Body, Post, Patch, Delete, ParseIntPipe } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserDto } from './dto/user.dto';
 import { User } from './user.entity';
 
 @Controller('users')
@@ -12,19 +11,19 @@ export class UserController {
   // este comportamiento es normal de nodejs, si se quiere parsear los params a un tipo
   // number se debe crear un middleware. En nest esto se resuelve con un pipe: ParseIntPipe
   @Get(':id')
-  async getUser(@Param('id', ParseIntPipe) id: number): Promise<UserDto> {
+  async getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
     const user = await this._userService.get(id);
     return user;
   }
 
   @Get()
-  async getUsers(): Promise<UserDto[]> {
+  async getUsers(): Promise<User[]> {
     const users = await this._userService.getAll();
     return users;
   }
 
   @Post('create')
-  async createUser(@Body() user: User): Promise<UserDto> {
+  async createUser(@Body() user: User): Promise<User> {
     const createUser = await this._userService.create(user);
     return createUser;
   }
