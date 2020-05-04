@@ -88,10 +88,10 @@ npm i -D dotenv @types/dotenv
 # modulos:
 nest g module config
 # Conexion db con docker
-docker run -d 5444:5432 --name my-postgres -e POSTGRES_PASSWORD postgres
+docker run -d -p 5444:5432 --name my-postgres -e POSTGRES_PASSWORD=postgres postgres
 docker exec -it id bash
 psql -U postgres -d postgres -h localhost
-CREATE DATABASE nombre_db
+CREATE DATABASE nombre_db;
 # instalamos ts-node
 npm i -g ts-node
 

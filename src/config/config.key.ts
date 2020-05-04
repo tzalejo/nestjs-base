@@ -3,5 +3,5 @@ export enum Configuration {
   HOST = 'localhost',
   USERNAME = 'postgres',
   PASSWORD = 'postgres',
-  DATABASE = 'nestjs-pg,'
+  DATABASE = 'nestjspg,'
 }

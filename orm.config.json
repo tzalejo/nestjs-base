@@ -1,7 +1,7 @@
 {
   "type": "postgres",
   "username": "postgres",
-  "password": "",
+  "password": "postgres",
   "port": 5444,
   "host": "localhost",
   "database": "nestjspg",
