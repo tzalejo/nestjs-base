@@ -1,7 +1,7 @@
 export enum Configuration {
   PORT = 'PORT',
-  HOST = 'localhost',
-  USERNAME = 'postgres',
-  PASSWORD = 'postgres',
-  DATABASE = 'nestjspg,'
+  HOST = 'HOST',
+  USERNAME = 'USERNAME',
+  PASSWORD = 'PASSWORD',
+  DATABASE = 'DATABASE'
 }

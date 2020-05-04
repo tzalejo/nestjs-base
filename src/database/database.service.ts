@@ -10,11 +10,13 @@ export const databaseProviders = [
     async useFactory(config: ConfigService) {
       // retorna toda las propiedades que soporta la conexion de postgres
       return {
-        ssl: true, // necesitemos conectar a un bd en la nuve
+        // ssl: true, // necesitemos conectar a un bd en la nuve
         type: 'postgres' as 'postgres',
         host: config.get(Configuration.HOST),
         username: config.get(Configuration.USERNAME),
         password: config.get(Configuration.PASSWORD),
+        port: 5432,
+        database: config.get(Configuration.DATABASE),
         // todo los archivos q conteng entity y termine .ts o .js son entidades
         entities: [`${__dirname}/../**/*.entity{.ts,.js}`], 
         migrations: [`${__dirname}/migrations/*{.ts,.js}`],
