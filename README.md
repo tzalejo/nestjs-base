@@ -99,4 +99,9 @@ npm i ts-mapper
 # 
 npm i class-validator
 
+# para auth
+npm i @nestjs/passport @nestjs/jwt passport-jwt bcryptjs jsonwebtoken passport class-transformer
+# para ayuda desarrollo a typescript
+npm i -D @types/bcryptjs @types/passport @types/passport-jwt
+
 ```

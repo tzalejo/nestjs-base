@@ -12,9 +12,10 @@ import { Configuration } from './config/config.key';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './module/user/user.module';
 import { RoleModule } from './module/role/role.module';
+import { AuthModule } from './module/auth/auth.module';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, UserModule, RoleModule],
+  imports: [ConfigModule, DatabaseModule, UserModule, RoleModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

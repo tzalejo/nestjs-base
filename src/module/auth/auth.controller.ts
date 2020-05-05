@@ -1,0 +1,22 @@
+import { Controller, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common';
+import { SigninDto, SignupDto } from './dto';
+import { AuthService } from './auth.service';
+
+@Controller('auth')
+export class AuthController {
+  constructor(
+    private readonly _authService: AuthService​​,
+  ) {}
+
+  @Post('/signup')
+  @UsePipes(ValidationPipe) // esto hace que las validacions q tiene SignupDto se cumplan..
+  async signup(@Body() signupDto: SignupDto): Promise<void> {
+    return this._authService.signup(signupDto);
+  }
+
+  @Post('/signin')
+  @UsePipes(ValidationPipe)
+  async signin(@Body() signinDto: SigninDto ) {
+    return this._authService.signin(signinDto);
+  }
+}
