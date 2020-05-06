@@ -50,7 +50,7 @@ export class AuthService {
       id: user.id,
       username: user.username,
       email: user.email,
-      roles: [] //user.roles.map(r => {r.name as RoleType}), // role es un array por ello usamos el map
+      roles: user.roles.map(r => r.name as RoleType), // role es un array por ello usamos el map
     }
     // creamos y asignamos el token
     const token = await this._jwtService.sign(payload);

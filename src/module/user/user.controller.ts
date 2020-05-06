@@ -2,6 +2,8 @@ import { Controller, Get, Param, Body, Post, Patch, Delete, ParseIntPipe, UseGua
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
 import { User } from './user.entity';
+import { Roles } from '../role/decorators/role.decorator';
+import { RoleGuard } from '../role/guards/role.guard';
 
 @Controller('users')
 export class UserController {
@@ -12,12 +14,15 @@ export class UserController {
   // este comportamiento es normal de nodejs, si se quiere parsear los params a un tipo
   // number se debe crear un middleware. En nest esto se resuelve con un pipe: ParseIntPipe
   @Get(':id')
+  @Roles('ADMIN', 'AUTHOR')
+  @UseGuards(AuthGuard(), RoleGuard​​)
   async getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
     const user = await this._userService.get(id);
     return user;
   }
-  @UseGuards(AuthGuard())
   @Get()
+  @Roles('ADMIN')
+  @UseGuards(AuthGuard())
   async getUsers(): Promise<User[]> {
     const users = await this._userService.getAll();
     return users;
