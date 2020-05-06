@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 // base de datos
 // import { TypeOrmModule } from '@nestjs/typeorm';
 // import { config } from './orm.config';
@@ -15,8 +13,6 @@ import { RoleModule } from './module/role/role.module';
 
 @Module({
   imports: [ConfigModule, DatabaseModule, UserModule, RoleModule],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {
   static port: number | string;

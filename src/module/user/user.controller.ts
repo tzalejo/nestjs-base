@@ -6,7 +6,7 @@ import { User } from './user.entity';
 @Controller('users')
 export class UserController {
   constructor(
-    private readonly _userService: UserService​​
+    private readonly _userService: UserService
   ){}
   // ParseIntPipe es para parsear el valor que viene como un objeto= {id:'1'}
   // este comportamiento es normal de nodejs, si se quiere parsear los params a un tipo
