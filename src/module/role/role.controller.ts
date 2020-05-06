@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Body, Post, Patch, Delete, ParseIntPipe } from '@nestjs/common';
 import { RoleService } from './role.service';
-import { Role } from './role.entity';
+import { ReadRoleDto, CreateRoleDto, UpdateRoleDto } from './dto';
 
 @Controller('roles')
 export class RoleController {
@@ -10,33 +10,28 @@ export class RoleController {
   // ParseIntPipe es para parsear el valor que viene como un objeto= {id:'1'}
   // este comportamiento es normal de nodejs, si se quiere parsear los params a un tipo
   // number se debe crear un middleware. En nest esto se resuelve con un pipe: ParseIntPipe
-  @Get(':id')
-  async getUser(@Param('id', ParseIntPipe) id: number): Promise<Role> {
-    const role = await this._roleService.get(id);
-    return role;
+  @Get(':roleId')
+  getUser(@Param('roleId', ParseIntPipe) roleId: number): Promise<ReadRoleDto​​> {
+    return this._roleService.get(roleId);
   }
 
   @Get()
-  async getUsers(): Promise<Role[]> {
-    const users = await this._roleService.getAll();
-    return users;
+  getUsers(): Promise<ReadRoleDto[]> {
+    return this._roleService.getAll();
   }
 
   @Post('create')
-  async createUser(@Body() role: Role): Promise<Role> {
-    const createUser = await this._roleService.create(role);
-    return createUser;
+  createUser(@Body() role: Partial<CreateRoleDto​​>): Promise<ReadRoleDto> {
+    return this._roleService.create(role);
   }
 
-  @Patch(':id')
-  async updateUser(@Param('id', ParseIntPipe) id: number, @Body() role: Role): Promise<any> {
-    await this._roleService.update(id, role);
-    return true;
+  @Patch(':roleId')
+  updateUser(@Param('roleId', ParseIntPipe) roleId: number, @Body() role: Partial<UpdateRoleDto​​>) {
+    return this._roleService.update(roleId, role);
   }
 
-  @Delete(':id')
-  async deleteUser(@Param('id', ParseIntPipe) id: number) {
-    await this._roleService.delete(id);
-    return true;
+  @Delete(':roleId')
+  deleteUser(@Param('roleId', ParseIntPipe) roleId: number) {
+    return this._roleService.delete(roleId);
   }
 }
