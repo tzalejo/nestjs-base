@@ -10,9 +10,10 @@ import { Configuration } from './config/config.key';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './module/user/user.module';
 import { RoleModule } from './module/role/role.module';
+import { BookModule } from './module/book/book.module';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, UserModule, RoleModule],
+  imports: [ConfigModule, DatabaseModule, UserModule, RoleModule, BookModule],
 })
 export class AppModule {
   static port: number | string;

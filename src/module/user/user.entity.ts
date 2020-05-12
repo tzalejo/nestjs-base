@@ -1,6 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { UserDetails } from './user.details.entity';
 import { Role } from '../role/role.entity';
+import { Book } from '../book/book.entity';
 //decorador para que esta clase se convierta en una tabla
 @Entity('users')
 export class User extends BaseEntity {
@@ -26,17 +27,19 @@ export class User extends BaseEntity {
   updatedAt: Date;
 
   // relacion con role
-  @ManyToMany(type => Role, role => role.users, { eager: true })
+  @ManyToMany(() => Role, role => role.users, { eager: true })
   @JoinTable({ name: 'user_roles'}) // con esto le damos el nombre al campo
   roles: Role[];
 
+  @ManyToMany(() => Book, book => book.authors)
+  @JoinTable({ name: 'user_books'}) // con esto le damos el nombre al campo
+  books: Book[];
+  
   // relacion con detalle
-  @OneToOne(type => UserDetails, { 
-    // No tiene q ver con delete cascade
-    cascade: true,
+  @OneToOne(() => UserDetails, { 
+    cascade: true, // No tiene q ver con delete cascade
     nullable: false,
-    // pues cada vez q hagamos un select de nuestra entidad user, el automaticamente me trae detalle
-    eager: true 
+    eager: true  // pues cada vez q hagamos un select de nuestra entidad user, el automaticamente me trae detalle
   })
   @JoinColumn({ name: 'detail_id' }) // con esto le damos el nombre al campo
   details: UserDetails;

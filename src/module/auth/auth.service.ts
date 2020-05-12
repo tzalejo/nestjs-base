@@ -3,10 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
 import { AuthRepository } from './auth.repository';
-import { SigninDto, SignupDto } from './dto';
+import { SigninDto, SignupDto, LoggedInDto } from './dto';
 import { User } from '../user/user.entity';
 import { RoleType } from '../role/roletype.enum';
 import { IJwtPayload } from './jwt-payload.interface';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +31,7 @@ export class AuthService {
   }
 
   // este metodo va devolver un objeto que sera el token 
-  async signin(signinDto​​: SigninDto​​): Promise<{token: string}> {
+  async signin(signinDto​​: SigninDto​​): Promise<LoggedInDto> {
     const { username, password } = signinDto;
     const user: User = await this._authRespository.findOne({
       where: {username},
@@ -53,7 +54,7 @@ export class AuthService {
       roles: user.roles.map(r => r.name as RoleType), // role es un array por ello usamos el map
     }
     // creamos y asignamos el token
-    const token = await this._jwtService.sign(payload);
-    return {token};
+    const token = this._jwtService.sign(payload);
+    return plainToClass(LoggedInDto, {token, user});
   }
 }
