@@ -1,8 +1,8 @@
 {
-  "name": "nest-back",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "name": "nest-back-api",
+  "version": "0.0.2",
+  "description": "Repo API en base a NestJS, Docker y postgres",
+  "author": "Valenzuela Alejandro",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
