@@ -1,6 +1,6 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from './../config/config.module';
-import{ Configuration } from './../config/config.key';
+import { Configuration } from './../config/config.key';
 import { ConfigService } from './../config/config.service';
 import { ConnectionOptions } from 'typeorm';
 export const databaseProviders = [
@@ -12,11 +12,11 @@ export const databaseProviders = [
       return {
         // ssl: true, // necesitemos conectar a un bd en la nuve
         type: 'postgres' as 'postgres',
-        host: config.get(Configuration.HOST),
-        username: config.get(Configuration.USERNAME),
-        password: config.get(Configuration.PASSWORD),
-        port: 5432,
-        database: config.get(Configuration.DATABASE),
+        host: config.get(Configuration.DB_HOST),
+        username: config.get(Configuration.DB_USERNAME),
+        password: config.get(Configuration.DB_PASSWORD),
+        port: parseInt(config.get(Configuration.DB_PORT)),
+        database: config.get(Configuration.DB_DATABASE),
         // todo los archivos q conteng entity y termine .ts o .js son entidades
         entities: [`${__dirname}/../**/*.entity{.ts,.js}`], 
         migrations: [`${__dirname}/migrations/*{.ts,.js}`],
