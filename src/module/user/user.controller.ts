@@ -1,4 +1,14 @@
-import { Controller, Get, Param, Body, Post, Patch, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Body,
+  Post,
+  Patch,
+  Delete,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
 // import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
 import { User } from './user.entity';
@@ -8,23 +18,21 @@ import { User } from './user.entity';
 
 @Controller('users')
 export class UserController {
-  constructor(
-    private readonly _userService: UserService
-  ){}
+  constructor(private readonly _userService: UserService) {}
   // ParseIntPipe es para parsear el valor que viene como un objeto= {id:'1'}
   // este comportamiento es normal de nodejs, si se quiere parsear los params a un tipo
   // number se debe crear un middleware. En nest esto se resuelve con un pipe: ParseIntPipe
   @Get(':id')
   // @Roles(RoleType​​.ADMINSTRATOR, 'AUTHOR')
   // @UseGuards(AuthGuard(), RoleGuard)
-  async getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
+  async getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
     const user = await this._userService.get(id);
     return user;
   }
   @Get()
   // @Roles(RoleType​​.ADMINSTRATOR)
   // @UseGuards(AuthGuard())
-  async getUsers(): Promise<User[]> {
+  async getUsers(): Promise<User[]> {
     const users = await this._userService.getAll();
     return users;
   }
@@ -42,16 +50,16 @@ export class UserController {
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id', ParseIntPipe) id: number) {
+  async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
     await this._userService.delete(id);
     return true;
   }
 
   @Post('setRole/:userId/:roleId')
   async setRoleToUser(
-    @Param('userId', ParseIntPipe) userId: number, 
-    @Param('roleId', ParseIntPipe) roleId: number 
-  ) {
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('roleId', ParseIntPipe) roleId: number,
+  ): Promise<boolean> {
     return this._userService.setRoleToUser(userId, roleId);
   }
 }

@@ -4,20 +4,18 @@ import { Role } from './role.entity';
 
 @Controller('roles')
 export class RoleController {
-  constructor(
-    private readonly _roleService: RoleService​​
-  ){}
+  constructor(private readonly _roleService: RoleService) {}
   // ParseIntPipe es para parsear el valor que viene como un objeto= {id:'1'}
   // este comportamiento es normal de nodejs, si se quiere parsear los params a un tipo
   // number se debe crear un middleware. En nest esto se resuelve con un pipe: ParseIntPipe
   @Get(':id')
-  async getUser(@Param('id', ParseIntPipe) id: number): Promise<Role> {
+  async getUser(@Param('id', ParseIntPipe) id: number): Promise<Role> {
     const role = await this._roleService.get(id);
     return role;
   }
 
   @Get()
-  async getUsers(): Promise<Role[]> {
+  async getUsers(): Promise<Role[]> {
     const users = await this._roleService.getAll();
     return users;
   }
@@ -35,7 +33,7 @@ export class RoleController {
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id', ParseIntPipe) id: number) {
+  async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
     await this._roleService.delete(id);
     return true;
   }

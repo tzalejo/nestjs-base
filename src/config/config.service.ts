@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import { parse } from 'dotenv';
 export class ConfigService {
-  private readonly envConfig: {[key: string]: string};
+  private readonly envConfig: { [key: string]: string };
 
-  constructor(){
+  constructor() {
     // que si la variable d entorno node_env no esta declarada..osea si no es production
     const isDevelopmenEnv = process.env.NODE_ENV !== 'production';
     // console.log('isDevelopmenEnv',isDevelopmenEnv);
@@ -20,12 +20,12 @@ export class ConfigService {
         process.exit(0);
       }
       // si existe, estamos en desarrollo
-      this.envConfig = parse(fs.readFileSync(envFilePath))
-    } else { // estamos en produccion:
+      this.envConfig = parse(fs.readFileSync(envFilePath));
+    } else {
+      // estamos en produccion:
       this.envConfig = {
         PORT: process.env.PORT,
-      }
-
+      };
     }
   }
 

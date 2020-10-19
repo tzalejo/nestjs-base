@@ -13,23 +13,21 @@ import { Configuration } from './../../config/config.key';
   imports: [
     TypeOrmModule.forFeature([AuthRepository]),
     PassportModule.register({
-      defaultStrategy: 'jwt'
+      defaultStrategy: 'jwt',
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory(config: ConfigService){
+      useFactory(config: ConfigService) {
         return {
-          secret: config.get(Configuration​​.JWT_SECRET),
-          signOption: {expiresIn: 3600} // espira en una hora el toke
-        }
-      }
+          secret: config.get(Configuration.JWT_SECRET),
+          signOption: { expiresIn: 3600 }, // espira en una hora el toke
+        };
+      },
     }),
-
-
   ],
   controllers: [AuthController],
-  providers: [AuthService, ConfigService​​, JwtStrategy],
-  exports: [JwtStrategy, PassportModule]
+  providers: [AuthService, ConfigService, JwtStrategy],
+  exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}

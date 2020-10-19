@@ -26,12 +26,12 @@ export class User extends BaseEntity {
   updatedAt: Date;
 
   // relacion con role
-  @ManyToMany(type => Role, role => role.users, { eager: true })
+  @ManyToMany(() => Role, role => role.users, { eager: true })
   @JoinTable({ name: 'user_roles'}) // con esto le damos el nombre al campo
   roles: Role[];
 
   // relacion con detalle
-  @OneToOne(type => UserDetails, { 
+  @OneToOne(() => UserDetails, { 
     // No tiene q ver con delete cascade
     cascade: true,
     nullable: false,

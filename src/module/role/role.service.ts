@@ -7,14 +7,14 @@ import { Role } from './role.entity';
 export class RoleService {
   constructor(
     @InjectRepository(RoleRepository)
-    private readonly _roleRepository: RoleRepository​​,
-  ){}
-  async get(id: number): Promise<Role>{
-    if(!id) {
+    private readonly _roleRepository: RoleRepository,
+  ) {}
+  async get(id: number): Promise<Role> {
+    if (!id) {
       throw new BadRequestException('Id es necesario');
     }
     const role: Role = await this._roleRepository.findOne(id, {
-      where: { status: 'ACTIVE'},
+      where: { status: 'ACTIVE' },
     });
     if (!role) {
       throw new NotFoundException('Usuario no existe');
@@ -23,10 +23,9 @@ export class RoleService {
     return role;
   }
 
-  async getAll(): Promise<Role[]>{
-
-    const roles: Role[] = await this._roleRepository.find( {
-      where: { status: 'ACTIVE'},
+  async getAll(): Promise<Role[]> {
+    const roles: Role[] = await this._roleRepository.find({
+      where: { status: 'ACTIVE' },
     });
     // retorno los usuarios mapeado
     return roles;
@@ -37,17 +36,17 @@ export class RoleService {
     return savedRole;
   }
 
-  async update(id: number, role: Role): Promise<void>{
+  async update(id: number, role: Role): Promise<void> {
     await this._roleRepository.update(id, role);
     // return this._mapperService.map<Role, RoleDto>(updateRole, new RoleDto());
   }
 
   async delete(id: number): Promise<void> {
-    const roleExists = await this._roleRepository.findOne(id, {where: {status: 'ACTIVE'}});
+    const roleExists = await this._roleRepository.findOne(id, { where: { status: 'ACTIVE' } });
     if (!roleExists) {
       throw new NotFoundException('Usuario no existe');
     }
 
-    await this._roleRepository.update(id, {status: 'INACTIVE'});
+    await this._roleRepository.update(id, { status: 'INACTIVE' });
   }
 }

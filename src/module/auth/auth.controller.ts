@@ -4,9 +4,7 @@ import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly _authService: AuthService​​,
-  ) {}
+  constructor(private readonly _authService: AuthService) {}
 
   @Post('/signup')
   @UsePipes(ValidationPipe) // esto hace que las validacions q tiene SignupDto se cumplan..
@@ -16,7 +14,7 @@ export class AuthController {
 
   @Post('/signin')
   @UsePipes(ValidationPipe)
-  async signin(@Body() signinDto: SigninDto ) {
+  async signin(@Body() signinDto: SigninDto): Promise<{ token: string }> {
     return this._authService.signin(signinDto);
   }
 }

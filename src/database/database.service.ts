@@ -11,16 +11,16 @@ export const databaseProviders = [
       // retorna toda las propiedades que soporta la conexion de postgres
       return {
         // ssl: true, // necesitemos conectar a un bd en la nuve
-        type: 'postgres' as 'postgres',
+        type: 'postgres',
         host: config.get(Configuration.DB_HOST),
         username: config.get(Configuration.DB_USERNAME),
         password: config.get(Configuration.DB_PASSWORD),
         port: parseInt(config.get(Configuration.DB_PORT)),
         database: config.get(Configuration.DB_DATABASE),
         // todo los archivos q conteng entity y termine .ts o .js son entidades
-        entities: [`${__dirname}/../**/*.entity{.ts,.js}`], 
+        entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
         migrations: [`${__dirname}/migrations/*{.ts,.js}`],
-      } as ConnectionOptions
-    }
-  })
-]
+      } as ConnectionOptions;
+    },
+  }),
+];

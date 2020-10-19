@@ -1,4 +1,9 @@
-import { Injectable, ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
@@ -11,16 +16,16 @@ import { IJwtPayload } from './jwt-payload.interface';
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(AuthRepository​​)
-    private readonly _authRespository: AuthRepository​​,
+    @InjectRepository(AuthRepository)
+    private readonly _authRespository: AuthRepository,
     private readonly _jwtService: JwtService,
-  ){}
+  ) {}
 
   // registrar nuestro usuario
-  async signup(signupDto: SignupDto​​): Promise<void> {
+  async signup(signupDto: SignupDto): Promise<void> {
     const { username, email } = signupDto;
     const userExists = await this._authRespository.findOne({
-      where: [{ username }, { email }] // estoy buscando el usuari q tenga el username 'O' que tenga email
+      where: [{ username }, { email }], // estoy buscando el usuari q tenga el username 'O' que tenga email
     });
     if (userExists) {
       // el usuario existe entonce no se puede loguear, le tiramos un error
@@ -29,11 +34,11 @@ export class AuthService {
     return this._authRespository.signup(signupDto);
   }
 
-  // este metodo va devolver un objeto que sera el token 
-  async signin(signinDto​​: SigninDto​​): Promise<{token: string}> {
+  // este metodo va devolver un objeto que sera el token
+  async signin(signinDto: SigninDto): Promise<{ token: string }> {
     const { username, password } = signinDto;
     const user: User = await this._authRespository.findOne({
-      where: {username},
+      where: { username },
     });
     if (!user) {
       throw new NotFoundException('El Usuario no existe');
@@ -46,14 +51,14 @@ export class AuthService {
     }
 
     // el pass es valido
-    const payload: IJwtPayload​​ = {
+    const payload: IJwtPayload = {
       id: user.id,
       username: user.username,
       email: user.email,
-      roles: user.roles.map(r => r.name as RoleType), // role es un array por ello usamos el map
-    }
+      roles: user.roles.map((r) => r.name as RoleType), // role es un array por ello usamos el map
+    };
     // creamos y asignamos el token
     const token = await this._jwtService.sign(payload);
-    return {token};
+    return { token };
   }
 }

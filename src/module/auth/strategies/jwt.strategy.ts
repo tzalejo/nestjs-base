@@ -11,27 +11,27 @@ import { IJwtPayload } from '../jwt-payload.interface';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly _configService: ConfigService,
-    // necesitamo el repositorio de autenticacion para validar 
+    // necesitamo el repositorio de autenticacion para validar
     // los datos(el token correspond a un usuario , q el usuario exista, etc)
     @InjectRepository(AuthRepository) // Los repositorio cuando son inyectados tiene q tener decorador InjectRepository
-    private readonly _authRepository: AuthRepository​​
+    private readonly _authRepository: AuthRepository,
   ) {
     // llamamos al contrutctor passportstrategy
     super({
       // Le indicamos de donde va a venir nuestro token..
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       // con esto le estamos pasando key al constructor de passportstrategy
-      secretOrKey: _configService.get(Configuration.JWT_SECRET)
+      secretOrKey: _configService.get(Configuration.JWT_SECRET),
     });
   }
 
   // solo va tener un metodo para validar que un usuario exista.
-  async validate(payload: IJwtPayload​​) {
+  async validate(payload: IJwtPayload): Promise<IJwtPayload> {
     // desectructuramos
     const { username } = payload;
     // utilizamos repositorio autenticacion para buscar el usuario q corresponda con ese nombre
     const user = await this._authRepository.findOne({
-      where: { username, status: 'ACTIVE' } // busca los usuarios con el nombre username con el status active
+      where: { username, status: 'ACTIVE' }, // busca los usuarios con el nombre username con el status active
     });
 
     if (!user) {
