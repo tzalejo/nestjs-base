@@ -17,15 +17,11 @@ export class UserService {
   ) {}
 
   async get(id: number): Promise<User> {
-    if (!id) {
-      throw new BadRequestException('Id es necesario');
-    }
+    if (!id) throw new BadRequestException('Id es necesario');
     const user: User = await this._userRepository.findOne(id, {
       where: { status: status.ACTIVE },
     });
-    if (!user) {
-      throw new NotFoundException('Usuario no existe');
-    }
+    if (!user) throw new NotFoundException('Usuario no existe');
     // retorno el usuario con el formato que defino en userDto
     return user;
   }
@@ -39,9 +35,7 @@ export class UserService {
   }
 
   async create(user: User): Promise<User> {
-    if (!user) {
-      throw new BadRequestException('El usuario es requerido');
-    }
+    if (!user) throw new BadRequestException('El usuario es requerido');
     const details = new UserDetails();
     user.details = details;
     const repo = await getConnection().getRepository(Role);
@@ -58,9 +52,7 @@ export class UserService {
 
   async delete(id: number): Promise<void> {
     const userExists = await this._userRepository.findOne(id, { where: { status: status.ACTIVE } });
-    if (!userExists) {
-      throw new NotFoundException('Usuario no existe');
-    }
+    if (!userExists) throw new NotFoundException('Usuario no existe');
 
     await this._userRepository.update(id, { status: status.INACTIVE });
   }
@@ -69,16 +61,13 @@ export class UserService {
     const userExists = await this._userRepository.findOne(userId, {
       where: { status: status.ACTIVE },
     });
-    if (!userExists) {
-      throw new NotFoundException('Usuario no existe');
-    }
+    if (!userExists) throw new NotFoundException('Usuario no existe');
 
     const roleExists = await this._roleRepository.findOne(roleId, {
       where: { status: status.ACTIVE },
     });
-    if (!roleExists) {
-      throw new NotFoundException('Role no existe');
-    }
+    if (!roleExists) throw new NotFoundException('Role no existe');
+  
     userExists.roles.push(roleExists);
     await this._userRepository.save(userExists);
     return true;

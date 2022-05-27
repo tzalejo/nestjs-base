@@ -18,12 +18,12 @@ nest g module config
 # definir las variable de .env
 docker-compose up -d
 # Correr migraciones(verificar las credenciales con orm.config.json)
-npm run migration:run 
+npm run migration:run
 # instalamos ts-node
 npm i -g ts-node
 # instalamos ts-mapper para convertir un objeto de un tipo a otro tipo
 npm i ts-mapper
-# 
+#
 npm i class-validator
 
 # para auth
